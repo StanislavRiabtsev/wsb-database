@@ -29,7 +29,7 @@ CREATE TABLE Product (
     SupplierID INT REFERENCES Supplier(SupplierID)
 );
 
-CREATE TABLE "Order" (
+CREATE TABLE Orders (
     OrderID SERIAL PRIMARY KEY,
     OrderDate DATE NOT NULL DEFAULT CURRENT_DATE,
     CustomerID INT REFERENCES Customer(CustomerID),
