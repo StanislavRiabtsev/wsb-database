@@ -30,22 +30,28 @@ $customers = $customer->listAll();
         </thead>
         <tbody>
             <?php foreach ($customers as $c): ?>
-                <tr>
-                    <td><?= htmlspecialchars($c['customerid']) ?></td>
-                    <td><?= htmlspecialchars($c['firstname']) ?></td>
-                    <td><?= htmlspecialchars($c['lastname']) ?></td>
-                    <td><?= htmlspecialchars($c['email']) ?></td>
-                    <td><?= htmlspecialchars($c['phone']) ?></td>
-                    <td><?= htmlspecialchars($c['address']) ?></td>
-                    <td>
-                        <a href="customerForm.php?id=<?= $c['customerid'] ?>">Edit</a> |
-                        <a href="orders.php?customer_id=<?= $c['customerid'] ?>">Orders</a>
-                    </td>
-                </tr>
+            <tr>
+                <td><?= htmlspecialchars($c['customerid']) ?></td>
+                <td><?= htmlspecialchars($c['firstname']) ?></td>
+                <td><?= htmlspecialchars($c['lastname']) ?></td>
+                <td><?= htmlspecialchars($c['email']) ?></td>
+                <td><?= htmlspecialchars($c['phone']) ?></td>
+                <td><?= htmlspecialchars($c['address']) ?></td>
+                <td>
+                    <a href="customerForm.php?id=<?= $c['customerid'] ?>">Edit</a> |
+                    <a href="orders.php?customer_id=<?= $c['customerid'] ?>">Orders</a>
+                </td>
+            </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <p><a href="orders.php">All orders</a></p>
+    <p>
+        <a href="orders.php">All orders</a>
+        <a href="orderItemView.php">Orderitem</a>
+        <a href="CategoryView.php">All orders</a>
+        <a href="ProductView.php">ProductView</a>
+        <a href="SupplierView.php">SupplierView</a>
+    </p>
 </body>
 
 </html>

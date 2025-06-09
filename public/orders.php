@@ -12,7 +12,7 @@ $orders = [];
 if ($filterCustomerId) {
     $stmt = $pdo->prepare("
         SELECT o.orderid, o.orderdate, o.totalamount, c.firstname, c.lastname
-        FROM order o
+        FROM orders o
         JOIN customer c ON o.customerid = c.customerid
         WHERE c.customerid = ?
         ORDER BY o.orderdate DESC
