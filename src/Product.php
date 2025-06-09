@@ -6,8 +6,8 @@ class Product
     private $pdo;
 
     public $productid;
-    public $names;
-    public $descriptions;
+    public $name;
+    public $description;
     public $price;
     public $stockquantity;
     public $categoryid;
@@ -37,40 +37,39 @@ class Product
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-
     private function fill($data)
     {
         $this->productid = $data['productid'];
-        $this->names = $data['names'];
-        $this->descriptions = $data['descriptions'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
         $this->price = $data['price'];
         $this->stockquantity = $data['stockquantity'];
         $this->categoryid = $data['categoryid'];
         $this->supplierid = $data['supplierid'];
     }
 
-    public function create($name, $desc, $price, $stockQty, $categoryId, $supplierId)
+    public function create($name, $description, $price, $stockquantity, $categoryid, $supplierid)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO product (names, descriptions, price, stockquantity, categoryid, supplierid) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $desc, $price, $stockQty, $categoryId, $supplierId]);
+        $stmt = $this->pdo->prepare("INSERT INTO public.product (name, description, price, stockquantity, categoryid, supplierid) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $description, $price, $stockquantity, $categoryid, $supplierid]);
         return $this->pdo->lastInsertId();
     }
 
-    public function update($id, $name, $desc, $price, $stockQty, $categoryId, $supplierId)
+    public function update($id, $name, $description, $price, $stockquantity, $categoryid, $supplierid)
     {
-        $stmt = $this->pdo->prepare("UPDATE product SET names = ?, descriptions = ?, price = ?, stockquantity = ?, categoryid = ?, supplierid = ? WHERE productid = ?");
-        return $stmt->execute([$name, $desc, $price, $stockQty, $categoryId, $supplierId, $id]);
+        $stmt = $this->pdo->prepare("UPDATE public.product SET name = ?, description = ?, price = ?, stockquantity = ?, categoryid = ?, supplierid = ? WHERE productid = ?");
+        return $stmt->execute([$name, $description, $price, $stockquantity, $categoryid, $supplierid, $id]);
     }
 
     public function delete($id)
     {
-        $stmt = $this->pdo->prepare("DELETE FROM product WHERE productid = ?");
+        $stmt = $this->pdo->prepare("DELETE FROM public.product WHERE productid = ?");
         return $stmt->execute([$id]);
     }
 
     public function listAll()
     {
-        $stmt = $this->pdo->query("SELECT * FROM product ORDER BY names");
+        $stmt = $this->pdo->query("SELECT * FROM public.product ORDER BY name");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
