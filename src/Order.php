@@ -81,14 +81,15 @@ class Order
             return null;
         }
 
-        // Получаем позиции заказа с продуктами
         $stmt = $this->pdo->prepare('
-            SELECT oi.OrderItemID, oi.Quantity, oi.UnitPrice,
-                   p.Name, p.Description
-            FROM public.OrderItem oi
-            JOIN public.Product p ON oi.ProductID = p.ProductID
-            WHERE oi.orderid = ?
-        ');
+    SELECT oi.orderitemid, oi.quantity, oi.unitprice,
+           p.name, p.description
+    FROM public.orderitem oi
+    JOIN public.product p ON oi.productid = p.productid
+    WHERE oi.orderid = ?
+');
+
+
         $stmt->execute([$orderid]);
         $orderItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

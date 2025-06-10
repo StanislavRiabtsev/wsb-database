@@ -8,7 +8,7 @@ $products = $product->listAll();
 
 <h2>Products</h2>
 <a href="productForm.php">Add new product</a>
-<table border="1">
+<table border="1" cellpadding="5" cellspacing="0">
     <tr>
         <th>Item Name</th>
         <th>Descriptions</th>
@@ -20,8 +20,8 @@ $products = $product->listAll();
     </tr>
     <?php foreach ($products as $p): ?>
         <tr>
-            <td><?= htmlspecialchars($p['itemname']) ?></td>
-            <td><?= htmlspecialchars($p['descriptions']) ?></td>
+            <td><?= htmlspecialchars($p['name']) ?></td>
+            <td><?= htmlspecialchars($p['description']) ?></td>
             <td><?= htmlspecialchars($p['price']) ?></td>
             <td><?= htmlspecialchars($p['stockquantity']) ?></td>
             <td><?= htmlspecialchars($p['categoryid']) ?></td>

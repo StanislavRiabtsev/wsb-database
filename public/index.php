@@ -19,11 +19,11 @@ $customers = $customer->listAll();
     <table border="1" cellpadding="5" cellspacing="0">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Surname</th>
+                <th>CustomerID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
                 <th>Email</th>
-                <th>Telephone</th>
+                <th>Phone</th>
                 <th>Adress</th>
                 <th>Actions</th>
             </tr>
@@ -47,10 +47,9 @@ $customers = $customer->listAll();
     </table>
     <p>
         <a href="orders.php">All orders</a>
-        <a href="orderItemView.php">Orderitem</a>
-        <a href="CategoryView.php">All orders</a>
+        <a href="CategoryView.php">Category</a>
+        <a href="SupplierView.php">SupplierViw</a>
         <a href="ProductView.php">ProductView</a>
-        <a href="SupplierView.php">SupplierView</a>
     </p>
 </body>
 

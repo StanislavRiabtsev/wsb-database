@@ -14,7 +14,7 @@ $customers = $customer->listAll();
 $products = $product->listAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $customerId = (int)$_POST['customerid'];
+    $customerId = (int)$_POST['customer_id'];
     $items = $_POST['items'];
 
     if ($customerId && $items && is_array($items)) {
