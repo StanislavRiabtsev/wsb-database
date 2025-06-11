@@ -41,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: index.php');
     exit;
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -54,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1><?= $editing ? 'Edit customer' : 'Add a customer' ?></h1>
     <form method="post">
         <?php if ($editing): ?>
-            <input type="hidden" name="id" value="<?= (int)$_GET['id'] ?>">
+        <input type="hidden" name="id" value="<?= (int)$_GET['id'] ?>">
         <?php endif; ?>
-        <label>Name:<br>
+        <label>First Name:<br>
             <input type="text" name="FirstName" required value="<?= htmlspecialchars($data['FirstName']) ?>">
         </label><br><br>
-        <label>Surname:<br>
+        <label>Last Name:<br>
             <input type="text" name="LastName" required value="<?= htmlspecialchars($data['LastName']) ?>">
         </label><br><br>
         <label>Email:<br>

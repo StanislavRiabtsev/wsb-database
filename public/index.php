@@ -24,7 +24,7 @@ $customers = $customer->listAll();
                 <th>LastName</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Adress</th>
+                <th>Address</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -48,7 +48,7 @@ $customers = $customer->listAll();
     <p>
         <a href="orders.php">All orders</a>
         <a href="CategoryView.php">Category</a>
-        <a href="SupplierView.php">SupplierViw</a>
+        <a href="SupplierView.php">SupplierView</a>
         <a href="ProductView.php">ProductView</a>
     </p>
 </body>

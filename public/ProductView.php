@@ -8,7 +8,7 @@ $products = $product->listAll();
 
 <h2>Products</h2>
 <a href="productForm.php">Add new product</a>
-<table border="1" cellpadding="5" cellspacing="0">
+<table border="1" cellpadding="5" cellspacing="0" id="product-table">
     <tr>
         <th>Item Name</th>
         <th>Description</th>
@@ -28,10 +28,35 @@ $products = $product->listAll();
             <td><?= htmlspecialchars($p['supplierid'] ?? '') ?></td>
             <td>
                 <a href="editProduct.php?id=<?= htmlspecialchars($p['productid'] ?? '') ?>">Edit</a>
-                <a href="deleteProduct.php?id=<?= htmlspecialchars($p['productid'] ?? '') ?>"
-                    onclick="return confirm('Delete?')">Delete</a>
+                <button class="delete-btn" data-id="<?= htmlspecialchars($p['productid'] ?? '') ?>">Delete</button>
             </td>
         </tr>
     <?php endforeach; ?>
 </table>
 <p><a href="index.php">Return</a></p>
+
+<script>
+    document.querySelectorAll('#product-table .delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            if (!confirm('Delete?')) return;
+
+            const id = this.getAttribute('data-id');
+            fetch('deleteProductAjax.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'id=' + encodeURIComponent(id)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        this.closest('tr').remove();
+                    } else {
+                        alert('Failed to delete product');
+                    }
+                })
+                .catch(() => alert('Error occurred'));
+        });
+    });
+</script>
