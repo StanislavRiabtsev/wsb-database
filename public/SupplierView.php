@@ -8,7 +8,7 @@ $suppliers = $supplier->listAll();
 
 <h2>Suppliers</h2>
 <a href="SupplierForm.php">Add supplier</a>
-<table border="1">
+<table border="1" cellpadding="5" cellspacing="0">
     <tr>
         <th>Name</th>
         <th>Contact</th>
