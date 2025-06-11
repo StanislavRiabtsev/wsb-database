@@ -1,57 +1,58 @@
-CREATE TABLE Customer (
-    CustomerID SERIAL PRIMARY KEY,
-    FirstName VARCHAR(100),
-    LastName VARCHAR(100),
-    Email VARCHAR(150) UNIQUE,
-    Phone VARCHAR(20),
-    Address TEXT
+create table customer (
+    customerid serial primary key,
+    firstname varchar(100),
+    lastname varchar(100),
+    email varchar(150) unique,
+    phone varchar(20),
+    address text
 );
 
-CREATE TABLE Category (
-    CategoryID SERIAL PRIMARY KEY,
-    CategoryName VARCHAR(100)
+create table category (
+    categoryid serial primary key,
+    categoryname varchar(100)
 );
 
-CREATE TABLE Supplier (
-    SupplierID SERIAL PRIMARY KEY,
-    SupplierName VARCHAR(150),
-    ContactName VARCHAR(100),
-    Phone VARCHAR(20)
+create table supplier (
+    supplierid serial primary key,
+    suppliername varchar(150),
+    contactname varchar(100),
+    phone varchar(20)
 );
 
-CREATE TABLE Product (
-    ProductID SERIAL PRIMARY KEY,
-    Name VARCHAR(150),
-    Description TEXT,
-    Price DECIMAL(10, 2),
-    StockQuantity INT,
-    CategoryID INT REFERENCES Category(CategoryID),
-    SupplierID INT REFERENCES Supplier(SupplierID)
+create table product (
+    productid serial primary key,
+    name varchar(150),
+    description text,
+    price decimal(10, 2),
+    stockquantity int,
+    categoryid int references category(categoryid),
+    supplierid int references supplier(supplierid)
 );
 
-CREATE TABLE Orders (
-    OrderID SERIAL PRIMARY KEY,
-    OrderDate DATE NOT NULL DEFAULT CURRENT_DATE,
-    CustomerID INT REFERENCES Customer(CustomerID),
-    TotalAmount DECIMAL(10, 2)
+create table orders (
+    orderid serial primary key,
+    orderdate date not null default current_date,
+    customerid int references customer(customerid),
+    totalamount decimal(10, 2)
 );
 
-CREATE TABLE OrderItem (
-    OrderItemID SERIAL PRIMARY KEY,
-    OrderID INT REFERENCES "Order"(OrderID) ON DELETE CASCADE,
-    ProductID INT REFERENCES Product(ProductID),
-    Quantity INT,
-    UnitPrice DECIMAL(10, 2)
+create table orderitem (
+    orderitemid serial primary key,
+    orderid int references orders(orderid) on delete cascade,
+    productid int references product(productid),
+    quantity int,
+    unitprice decimal(10, 2)
 );
 
+insert into customer (firstname, lastname, email, phone, address)
+values ('Test', 'User', 'test@example.com', '123456789', 'Test Street');
 
-INSERT INTO Customer (FirstName, LastName, Email, Phone, Address)
-VALUES ('Test', 'User', 'test@example.com', '123456789', 'Test Street');
+insert into category (categoryname) values ('Default');
 
-INSERT INTO Category (CategoryName) VALUES ('Default');
-INSERT INTO Supplier (SupplierName, ContactName, Phone) VALUES ('Default', 'Supplier Contact', '111-222-333');
+insert into supplier (suppliername, contactname, phone)
+values ('Default', 'Supplier Contact', '111-222-333');
 
-INSERT INTO Product (Name, Description, Price, StockQuantity, CategoryID, SupplierID)
-VALUES
+insert into product (name, description, price, stockquantity, categoryid, supplierid)
+values 
 ('Product A', 'Desc A', 10.00, 100, 1, 1),
 ('Product B', 'Desc B', 20.00, 50, 1, 1);

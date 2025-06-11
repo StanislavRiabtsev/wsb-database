@@ -38,11 +38,11 @@ class OrderItem
     public function listByOrder($orderid)
     {
         $stmt = $this->pdo->prepare("
-        SELECT oi.*, p.names as product_name
-        FROM public.orderitem oi
-        JOIN public.product p ON oi.productid = p.productid
-        WHERE oi.orderid = ?
-    ");
+    SELECT oi.*, p.name as product_name
+    FROM public.orderitem oi
+    JOIN public.product p ON oi.productid = p.productid
+    WHERE oi.orderid = ?
+");
         $stmt->execute([$orderid]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

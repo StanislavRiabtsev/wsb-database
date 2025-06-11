@@ -1,7 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/db.php'; // Подключение к базе
 require_once __DIR__ . '/../src/Order.php';
 require_once __DIR__ . '/../src/Customer.php';
-require_once __DIR__ . '/../config/db.php';
 
 $order = new Order($pdo);
 $customer = new Customer($pdo);
@@ -12,8 +12,8 @@ $orders = [];
 if ($filterCustomerId) {
     $stmt = $pdo->prepare("
         SELECT o.orderid, o.orderdate, o.totalamount, c.firstname, c.lastname
-        FROM orders o
-        JOIN customer c ON o.customerid = c.customerid
+        FROM public.orders o
+        JOIN public.customer c ON o.customerid = c.customerid
         WHERE c.customerid = ?
         ORDER BY o.orderdate DESC
     ");
@@ -31,20 +31,30 @@ if ($filterCustomerId) {
 <head>
     <meta charset="UTF-8" />
     <title>Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Orders <?= $filterCustomerId ? "customer: {$customer->firstname} {$customer->lastname}" : '' ?></h1>
+    <h1 class="title">Orders <?= $filterCustomerId ? "customer: {$customer->firstname} {$customer->lastname}" : '' ?>
+    </h1>
+
     <?php if (!$filterCustomerId): ?>
-        <p><a href="orderForm.php">Add order</a></p>
+        <div class="link">
+            <button type="button" class="btn btn-secondary">
+                <a href="orderForm.php">Add order</a>
+            </button>
+        </div>
     <?php endif; ?>
-    <table border="1" cellpadding="5" cellspacing="0">
+
+    <table border="1" cellpadding="5" cellspacing="0" class="table table-striped table-hover table-bordered">
         <thead>
             <tr>
                 <th>OrderID</th>
-                <th>Date</th>
+                <th>OrderDate</th>
                 <th>Customers</th>
-                <th>Sum</th>
+                <th>TotalAmount</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -56,14 +66,28 @@ if ($filterCustomerId) {
                     <td><?= htmlspecialchars($o['firstname'] . ' ' . $o['lastname']) ?></td>
                     <td><?= htmlspecialchars($o['totalamount']) ?></td>
                     <td>
-                        <a href="orderView.php?id=<?= $o['orderid'] ?>">View</a>
+                        <div class="link">
+                            <button type="button" class="btn btn-secondary"><a
+                                    href="ordersView.php?id=<?= $o['orderid'] ?>">View</a></button>
+                            <button type="button" class="btn btn-secondary"><a
+                                    href="orderItemView.php?order_id=<?= $o['orderid'] ?>">Items</a></button>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
-            <?php if (!$orders) echo '<tr><td colspan="5">No orders found</td></tr>'; ?>
+
+            <?php if (!$orders): ?>
+                <tr>
+                    <td colspan="5">No orders found</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table>
-    <p><a href="index.php">Return to customers</a></p>
+    <div class="link">
+        <button type="button" class="btn btn-secondary">
+            <a href="index.php">Return tocustomers</a>
+        </button>
+    </div>
 </body>
 
 </html>

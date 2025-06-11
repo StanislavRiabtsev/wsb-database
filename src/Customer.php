@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../config/db.php';
-
 class Customer
 {
     private $pdo;
@@ -42,9 +40,14 @@ class Customer
     public function create($firstName, $lastName, $email, $phone, $address)
     {
         $stmt = $this->pdo->prepare('INSERT INTO public.customer (firstname, lastname, email, phone, address) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([$firstName, $lastName, $email, $phone, $address]);
+        try {
+            $stmt->execute([$firstName, $lastName, $email, $phone, $address]);
+        } catch (PDOException $e) {
+            die("Ошибка вставки: " . $e->getMessage());
+        }
         return $this->pdo->lastInsertId();
     }
+
 
     public function update($id, $firstName, $lastName, $email, $phone, $address)
     {

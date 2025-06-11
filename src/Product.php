@@ -32,7 +32,14 @@ class Product
 
     public function getById($id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM product WHERE productid = ?");
+        $stmt = $this->pdo->prepare("
+            SELECT 
+                productid AS ProductID,
+                name AS Name,
+                price AS Price
+            FROM public.product 
+            WHERE productid = ?
+        ");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -69,7 +76,7 @@ class Product
 
     public function listAll()
     {
-        $stmt = $this->pdo->query("SELECT * FROM public.product ORDER BY name");
+        $stmt = $this->pdo->query("SELECT productid, name, description, price, stockquantity, categoryid, supplierid FROM public.product ORDER BY name");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -1,54 +1,63 @@
 <?php
 require_once __DIR__ . '/../src/Order.php';
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../src/OrderItem.php';
 
 if (!isset($_GET['id'])) {
-    die("Не указан ID заказа");
+    die("Order ID not specified");
 }
 
 $order = new Order($pdo);
 $orderDetails = $order->getOrderDetails((int)$_GET['id']);
 
 if (!$orderDetails) {
-    die("Заказ не найден");
+    die("Order not found");
 }
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="eu">
 
 <head>
     <meta charset="UTF-8" />
-    <title>Детали заказа</title>
+    <title>Order details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Заказ #<?= $orderDetails['OrderID'] ?></h1>
-    <p><strong>Дата:</strong> <?= htmlspecialchars($orderDetails['OrderDate']) ?></p>
-    <p><strong>Клиент:</strong> <?= htmlspecialchars($orderDetails['CustomerName']) ?></p>
-    <p><strong>Сумма:</strong> <?= htmlspecialchars($orderDetails['TotalAmount']) ?></p>
+    <h1 class="title">Order #<?= $orderDetails['orderid'] ?></h1>
+    <p><strong>Date:</strong> <?= htmlspecialchars($orderDetails['orderdate']) ?></p>
+    <p><strong>Customer:</strong> <?= htmlspecialchars($orderDetails['firstname'] . ' ' . $orderDetails['lastname']) ?>
+    </p>
+    <p><strong>Sum:</strong> <?= htmlspecialchars($orderDetails['totalamount']) ?></p>
 
-    <h2>Позиции заказа</h2>
-    <table border="1" cellpadding="5" cellspacing="0">
+    <h2 class="title">Order items</h2>
+    <table border="1" cellpadding="5" cellspacing="0" class="table table-striped table-hover table-bordered">
         <thead>
             <tr>
-                <th>Продукт</th>
-                <th>Количество</th>
-                <th>Цена за единицу</th>
-                <th>Сумма</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price per unit</th>
+                <th>Amount</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($orderDetails['Items'] as $item): ?>
-            <tr>
-                <td><?= htmlspecialchars($item['ProductName']) ?></td>
-                <td><?= htmlspecialchars($item['Quantity']) ?></td>
-                <td><?= htmlspecialchars($item['UnitPrice']) ?></td>
-                <td><?= htmlspecialchars($item['Quantity'] * $item['UnitPrice']) ?></td>
-            </tr>
+                <tr>
+                    <td><?= htmlspecialchars($item['name']) ?></td>
+                    <td><?= htmlspecialchars($item['quantity']) ?></td>
+                    <td><?= htmlspecialchars($item['unitprice']) ?></td>
+                    <td><?= htmlspecialchars($item['quantity'] * $item['unitprice']) ?></td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <p><a href="orders.php">Вернуться к списку заказов</a></p>
+    <div class="link">
+        <button type="button" class="btn btn-secondary">
+            <a href="orders.php">Back to order list</a>
+        </button>
+    </div>
 </body>
 
 </html>

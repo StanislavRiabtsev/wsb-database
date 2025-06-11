@@ -1,40 +1,43 @@
-CREATE OR REPLACE FUNCTION add_order_with_items(
-    customer_id INT,
-    items JSON
+create or replace function add_order_with_items(
+    customer_id int,
+    items json
 )
-RETURNS VOID AS $$
-DECLARE
-    order_id INT;
-    total DECIMAL(10,2) := 0;
-    item JSON;
-    pid INT;
-    qty INT;
-    product_price DECIMAL(10,2);
-BEGIN
-    INSERT INTO "Order"(CustomerID, TotalAmount)
-    VALUES (customer_id, 0)
-    RETURNING OrderID INTO order_id;
+returns void as $$
+declare
+    order_id int;
+    total decimal(10,2) := 0;
+    item json;
+    pid int;
+    qty int;
+    product_price decimal(10,2);
+begin
+    insert into orders(customerid, totalamount)
+    values (customer_id, 0)
+    returning orderid into order_id;
 
-    FOR item IN SELECT * FROM json_array_elements(items)
-    LOOP
-        pid := (item->>'ProductID')::INT;
-        qty := (item->>'Quantity')::INT;
-        SELECT Product.Price INTO product_price FROM Product WHERE ProductID = pid;
+    for item in select * from json_array_elements(items)
+    loop
+        pid := (item->>'productid')::int;
+        qty := (item->>'quantity')::int;
 
-        IF product_price IS NULL THEN
-            RAISE EXCEPTION 'Produkt % nie istnieje', pid;
-        END IF;
+        select price into product_price from product where productid = pid;
 
-        INSERT INTO OrderItem(OrderID, ProductID, Quantity, UnitPrice)
-        VALUES (order_id, pid, qty, product_price);
+        if product_price is null then
+            raise exception 'Product % does not exist', pid;
+        end if;
 
-        UPDATE Product
-        SET StockQuantity = StockQuantity - qty
-        WHERE ProductID = pid;
+        insert into orderitem(orderid, productid, quantity, unitprice)
+        values (order_id, pid, qty, product_price);
+
+        update product
+        set stockquantity = stockquantity - qty
+        where productid = pid;
 
         total := total + (product_price * qty);
-    END LOOP;
+    end loop;
 
-    UPDATE "Order" SET TotalAmount = total WHERE OrderID = order_id;
-END;
-$$ LANGUAGE plpgsql;
+    update orders
+    set totalamount = total
+    where orderid = order_id;
+end;
+$$ language plpgsql;
