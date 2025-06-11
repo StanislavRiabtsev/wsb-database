@@ -8,16 +8,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO category (categoryname) VALUES (?)");
         $stmt->execute([$categoryname]);
 
-        header("Location: CategoryView.php"); // можно изменить на нужный файл
+        header("Location: CategoryView.php");
         exit;
     }
 }
 ?>
 
-<h2>Add New Category</h2>
-<form method="POST">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+<h2 class="link">Add New Category</h2>
+<form class="forms" method="POST">
     <label for="categoryname">Category Name:</label><br>
-    <input type="text" id="categoryname" name="categoryname" required><br><br>
+    <input type="text" class="form-control" id="categoryname" name="categoryname" required><br><br>
 
-    <input type="submit" value="Save">
+    <input type="submit" class="btn btn-secondary" value="Save">
 </form>

@@ -50,32 +50,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <title><?= $editing ? 'Edit customer' : 'Add a customer' ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1><?= $editing ? 'Edit customer' : 'Add a customer' ?></h1>
-    <form method="post">
+    <h1 class="title"><?= $editing ? 'Edit customer' : 'Add a customer' ?></h1>
+    <form class="forms" method="post">
         <?php if ($editing): ?>
-        <input type="hidden" name="id" value="<?= (int)$_GET['id'] ?>">
+        <input type="hidden" class="form-control" name="id" value="<?= (int)$_GET['id'] ?>">
         <?php endif; ?>
         <label>First Name:<br>
-            <input type="text" name="FirstName" required value="<?= htmlspecialchars($data['FirstName']) ?>">
+            <input type="text" class="form-control" name="FirstName" required
+                value="<?= htmlspecialchars($data['FirstName']) ?>">
         </label><br><br>
         <label>Last Name:<br>
-            <input type="text" name="LastName" required value="<?= htmlspecialchars($data['LastName']) ?>">
+            <input type="text" class="form-control" name="LastName" required
+                value="<?= htmlspecialchars($data['LastName']) ?>">
         </label><br><br>
         <label>Email:<br>
-            <input type="email" name="Email" required value="<?= htmlspecialchars($data['Email']) ?>">
+            <input type="email" class="form-control" name="Email" required
+                value="<?= htmlspecialchars($data['Email']) ?>">
         </label><br><br>
         <label>Phone:<br>
-            <input type="text" name="Phone" value="<?= htmlspecialchars($data['Phone']) ?>">
+            <input type="text" class="form-control" name="Phone" value="<?= htmlspecialchars($data['Phone']) ?>">
         </label><br><br>
         <label>Address:<br>
-            <textarea name="Address"><?= htmlspecialchars($data['Address']) ?></textarea>
+            <textarea class="form-control" name="Address"><?= htmlspecialchars($data['Address']) ?></textarea>
         </label><br><br>
-        <button type="submit">Save</button>
+        <button type="submit" class="btn btn-secondary">Save</button>
     </form>
-    <p><a href="index.php">Back to customer list</a></p>
+    <div class="link">
+        <button type="button" class="btn btn-secondary">
+            <a href="index.php">Back to customer list</a>
+        </button>
+    </div>
 </body>
 
 </html>
