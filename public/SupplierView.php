@@ -20,16 +20,12 @@ $suppliers = $supplier->listAll();
         <th>Name</th>
         <th>Contact</th>
         <th>Phone</th>
-        <th>Actions</th>
     </tr>
     <?php foreach ($suppliers as $s): ?>
     <tr>
         <td><?= htmlspecialchars($s['suppliername']) ?></td>
         <td><?= htmlspecialchars($s['contactname']) ?></td>
         <td><?= htmlspecialchars($s['phone']) ?></td>
-        <td>
-            <button class="btn btn-secondary delete-btn" data-id="<?= $s['supplierid'] ?>">Delete</button>
-        </td>
     </tr>
     <?php endforeach; ?>
 </table>

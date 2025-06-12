@@ -19,15 +19,11 @@ $categories = $category->listAll();
     <tr>
         <th>CategoryID</th>
         <th>CategoryName</th>
-        <th>Actions</th>
     </tr>
     <?php foreach ($categories as $c): ?>
     <tr>
         <td><?= $c['categoryid'] ?></td>
         <td><?= htmlspecialchars($c['categoryname']) ?></td>
-        <td>
-            <button class="btn btn-secondary delete-btn" data-id="<?= $c['categoryid'] ?>">Delete</button>
-        </td>
     </tr>
     <?php endforeach; ?>
 </table>

@@ -67,7 +67,6 @@ class Order
 
     public function getOrderDetails($orderid)
     {
-        // Получаем заказ с клиентом
         $stmt = $this->pdo->prepare('
             SELECT o.orderid, o.orderdate, o.totalamount, c.firstname, c.lastname, c.email, c.phone, c.address
             FROM public.orders o
