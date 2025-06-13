@@ -26,49 +26,47 @@ $products = $product->listAll();
         <th>Actions</th>
     </tr>
     <?php foreach ($products as $p): ?>
-        <tr>
-            <td><?= htmlspecialchars($p['name'] ?? '') ?></td>
-            <td><?= htmlspecialchars($p['description'] ?? '') ?></td>
-            <td><?= htmlspecialchars($p['price'] ?? '') ?></td>
-            <td><?= htmlspecialchars($p['stockquantity'] ?? '') ?></td>
-            <td><?= htmlspecialchars($p['categoryid'] ?? '') ?></td>
-            <td><?= htmlspecialchars($p['supplierid'] ?? '') ?></td>
-            <td>
-                <div class="link">
-                    <button class="btn btn-secondary delete-btn"><a
-                            href="editProduct.php?id=<?= htmlspecialchars($p['productid'] ?? '') ?>">Edit</a></button>
-                    <button class="btn btn-secondary delete-btn"
-                        data-id="<?= htmlspecialchars($p['productid'] ?? '') ?>">Delete</button>
-                </div>
-            </td>
-        </tr>
+    <tr>
+        <td><?= htmlspecialchars($p['name'] ?? '') ?></td>
+        <td><?= htmlspecialchars($p['description'] ?? '') ?></td>
+        <td><?= htmlspecialchars($p['price'] ?? '') ?></td>
+        <td><?= htmlspecialchars($p['stockquantity'] ?? '') ?></td>
+        <td><?= htmlspecialchars($p['categoryid'] ?? '') ?></td>
+        <td><?= htmlspecialchars($p['supplierid'] ?? '') ?></td>
+        <td>
+            <div class="link">
+                <button class="btn btn-secondary delete-btn"><a
+                        href="editProduct.php?id=<?= htmlspecialchars($p['productid'] ?? '') ?>">Edit</a></button>
+            </div>
+        </td>
+    </tr>
     <?php endforeach; ?>
 </table>
 <div class="link"> <button type="button" class="btn btn-secondary"><a href="index.php">Return to
             customers</a></button></div>
 
 <script>
-    document.querySelectorAll('#product-table .delete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            if (!confirm('Delete?')) return;
+document.querySelectorAll('#product-table .delete-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        if (!confirm('Delete?')) return;
 
-            const id = this.getAttribute('data-id');
-            fetch('deleteProductAjax.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'id=' + encodeURIComponent(id)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        this.closest('tr').remove();
-                    } else {
-                        alert('Failed to delete product');
-                    }
-                })
-                .catch(() => alert('Error occurred'));
-        });
+        const id = this.getAttribute('data-id');
+        fetch('deleteProductAjax.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'id=' + encodeURIComponent(id)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    this.closest('tr').remove();
+                } else {
+                    alert('Failed to delete product');
+                }
+            })
+            .catch(() => alert('Error occurred'));
     });
+});
 </script>

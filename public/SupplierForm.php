@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("INSERT INTO supplier (suppliername, contactname, phone) VALUES (?, ?, ?)");
     $stmt->execute([$suppliername, $contactname, $phone]);
 
-    header("Location: supplierView.php"); // или другой файл, куда должен перейти пользователь
+    header("Location: supplierView.php");
     exit;
 }
 ?>

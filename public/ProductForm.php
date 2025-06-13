@@ -1,5 +1,4 @@
 <?php
-// productForm.php
 require_once __DIR__ . '/../src/Product.php';
 require_once __DIR__ . '/../src/Category.php';
 require_once __DIR__ . '/../src/Supplier.php';
@@ -46,17 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label for="suppliername"> Category:</label>
     <select class="form-select" name="categoryid">
         <?php foreach ($categories as $cat): ?>
-            <option value="<?= $cat['categoryid'] ?>" <?= $cat['categoryid'] == $data['categoryid'] ? 'selected' : '' ?>>
-                <?= htmlspecialchars($cat['categoryname']) ?>
-            </option>
+        <option value="<?= $cat['categoryid'] ?>" <?= $cat['categoryid'] == $data['categoryid'] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($cat['categoryname']) ?>
+        </option>
         <?php endforeach; ?>
     </select><br>
     Supplier:
     <select class="form-select" name="supplierid">
         <?php foreach ($suppliers as $sup): ?>
-            <option value="<?= $sup['supplierid'] ?>" <?= $sup['supplierid'] == $data['supplierid'] ? 'selected' : '' ?>>
-                <?= htmlspecialchars($sup['suppliername']) ?>
-            </option>
+        <option value="<?= $sup['supplierid'] ?>" <?= $sup['supplierid'] == $data['supplierid'] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($sup['suppliername']) ?>
+        </option>
         <?php endforeach; ?>
     </select><br>
     <button class="btn btn-secondary" type="submit">Save</button>
